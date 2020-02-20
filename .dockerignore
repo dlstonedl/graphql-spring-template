@@ -1,0 +1,13 @@
+.gradle/
+.idea/
+build/
+!build/libs/
+gradle/
+src/
+.gitignore
+build.gradle
+build.sh
+gradlew
+gradlew.bat
+README.md
+settings.gradle
