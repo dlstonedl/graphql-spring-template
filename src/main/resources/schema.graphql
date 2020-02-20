@@ -2,6 +2,17 @@ type Query {
   bookById(id: ID): Book
 }
 
+type Mutation {
+  updateBook(bookInput: BookInput!): Book
+}
+
+input BookInput {
+  id: ID!
+  name: String
+  pageCount: Int
+  authorId: String
+}
+
 type Book {
   id: ID
   name: String

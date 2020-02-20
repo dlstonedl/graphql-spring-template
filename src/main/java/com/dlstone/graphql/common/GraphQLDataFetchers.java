@@ -8,10 +8,10 @@ import org.springframework.stereotype.Component;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Component
 public class GraphQLDataFetchers {
-
     private static List<Map<String, String>> books = Arrays.asList(
             ImmutableMap.of("id", "book-1",
                     "name", "Harry Potter and the Philosopher's Stone",
@@ -60,4 +60,17 @@ public class GraphQLDataFetchers {
                     .orElse(null);
         };
     }
+
+    public DataFetcher updateBookDataFetcher() {
+        return environment -> {
+            Map<String, String> newBook = environment.getArgument("bookInput");
+            books = books
+                .stream()
+                .filter(book -> !StringUtils.equals(book.get("id"), newBook.get("id")))
+                .collect(Collectors.toList());
+            books.add(newBook);
+            return newBook;
+        };
+    }
+
 }
