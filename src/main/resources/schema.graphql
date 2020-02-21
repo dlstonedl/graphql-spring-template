@@ -14,16 +14,16 @@ type Mutation {
 
 input BookInput {
   id: ID!
-  name: String
-  pageCount: Int
-  authorId: String
+  name: String!
+  pageCount: Int!
+  authorIds: [String]!
 }
 
 type Book {
   id: ID
   name: String
   pageCount: Int
-  author: User
+  authors: [User]
 }
 
 type User {
