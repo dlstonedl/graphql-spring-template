@@ -3,11 +3,14 @@ package com.dlstone.graphql.common;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
 import graphql.schema.DataFetcher;
+import lombok.extern.slf4j.Slf4j;
+import org.dataloader.DataLoader;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Component
 public class GraphQLDataFetchers {
     private static List<Map<String, Object>> books = Arrays.asList(
@@ -18,11 +21,11 @@ public class GraphQLDataFetchers {
             ImmutableMap.of("id", "book-2",
                     "name", "Moby Dick",
                     "pageCount", "635",
-                    "authorIds", Lists.newArrayList("author-1", "author-2", "author-3")),
+                    "authorIds", Lists.newArrayList("author-2", "author-3")),
             ImmutableMap.of("id", "book-3",
                     "name", "Interview with the vampire",
                     "pageCount", "371",
-                    "authorIds", Lists.newArrayList("author-1", "author-2", "author-3"))
+                    "authorIds", Lists.newArrayList("author-1", "author-3"))
     );
 
     private static List<Map<String, String>> authors = Arrays.asList(
@@ -56,11 +59,31 @@ public class GraphQLDataFetchers {
         return environment -> {
             Map<String,Object> book = environment.getSource();
             ArrayList<String> authorIds = (ArrayList<String>) book.get("authorIds");
+            log.info("authorIds: " + authorIds.toString());
+
             return authors
                     .stream()
                     .filter(author -> authorIds.contains(author.get("id")))
                     .collect(Collectors.toList());
         };
+    }
+
+    public DataFetcher getAuthorLoaderDataFetcher() {
+        return environment -> {
+            Map<String, Object> book = environment.getSource();
+            ArrayList<String> authorIds = (ArrayList<String>) book.get("authorIds");
+            DataLoader<String, Map<String, String>> authorDataLoader = environment.getDataLoader(GraphQLDataLoader.AUTHOR_LOADER);
+            return authorDataLoader.loadMany(authorIds);
+        };
+    }
+
+    public List<Map<String, String>> getBatchAuthors(List<String> authorIds) {
+        log.info("authorIds: " + authorIds.toString());
+
+        return authors
+            .stream()
+            .filter(author -> authorIds.contains(author.get("id")))
+            .collect(Collectors.toList());
     }
 
     public DataFetcher updateBookDataFetcher() {

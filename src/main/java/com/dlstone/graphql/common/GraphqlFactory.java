@@ -45,7 +45,7 @@ public class GraphqlFactory {
     private RuntimeWiring buildWiring() {
         return RuntimeWiring.newRuntimeWiring()
                 .type(newTypeWiring("Query").dataFetcher("bookById", graphQLDataFetchers.getBookByIdDataFetcher()))
-                .type(newTypeWiring("Book").dataFetcher("authors", graphQLDataFetchers.getAuthorDataFetcher()))
+                .type(newTypeWiring("Book").dataFetcher("authors", graphQLDataFetchers.getAuthorLoaderDataFetcher()))
                 .type("Query", builder -> builder.dataFetcher("books", graphQLDataFetchers.getBooks()))
                 .type(newTypeWiring("Mutation").dataFetcher("updateBook", graphQLDataFetchers.updateBookDataFetcher()))
                 .build();
