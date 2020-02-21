@@ -50,6 +50,10 @@ public class GraphQLDataFetchers {
         };
     }
 
+    public DataFetcher getBooks() {
+        return environment -> books;
+    }
+
     public DataFetcher getAuthorDataFetcher() {
         return environment -> {
             Map<String,String> book = environment.getSource();
