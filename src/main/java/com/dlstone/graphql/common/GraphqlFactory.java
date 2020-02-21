@@ -5,8 +5,8 @@ import com.google.common.io.Resources;
 import graphql.GraphQL;
 import graphql.schema.GraphQLSchema;
 import graphql.schema.idl.*;
+import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
@@ -18,6 +18,7 @@ import static graphql.schema.idl.TypeRuntimeWiring.newTypeWiring;
 @Component
 public class GraphqlFactory {
 
+    @Getter
     private GraphQL graphQL;
 
     private GraphQLDataFetchers graphQLDataFetchers;
@@ -25,11 +26,6 @@ public class GraphqlFactory {
     @Autowired
     public GraphqlFactory(GraphQLDataFetchers graphQLDataFetchers) {
         this.graphQLDataFetchers = graphQLDataFetchers;
-    }
-
-    @Bean
-    public GraphQL getGraphQL() {
-        return graphQL;
     }
 
     @PostConstruct
