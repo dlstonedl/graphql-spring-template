@@ -3,7 +3,7 @@ package com.dlstone.graphql.controller;
 
 import com.dlstone.graphql.annotation.FetcherMapping;
 import com.dlstone.graphql.annotation.FetcherController;
-import com.dlstone.graphql.common.GraphQLData;
+import com.dlstone.graphql.repository.GraphQLData;
 import graphql.schema.DataFetcher;
 import org.springframework.beans.factory.annotation.Autowired;
 

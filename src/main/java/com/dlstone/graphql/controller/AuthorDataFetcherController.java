@@ -3,7 +3,7 @@ package com.dlstone.graphql.controller;
 import com.dlstone.graphql.annotation.FetcherController;
 import com.dlstone.graphql.annotation.FetcherMapping;
 import com.dlstone.graphql.common.DataLoaderName;
-import com.dlstone.graphql.common.GraphQLData;
+import com.dlstone.graphql.repository.GraphQLData;
 import graphql.schema.DataFetcher;
 import lombok.extern.slf4j.Slf4j;
 import org.dataloader.DataLoader;

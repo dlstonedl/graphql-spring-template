@@ -2,7 +2,7 @@ package com.dlstone.graphql.controller;
 
 import com.dlstone.graphql.annotation.LoaderController;
 import com.dlstone.graphql.annotation.LoaderMapping;
-import com.dlstone.graphql.common.GraphQLData;
+import com.dlstone.graphql.repository.GraphQLData;
 import org.dataloader.BatchLoader;
 import org.springframework.beans.factory.annotation.Autowired;
 

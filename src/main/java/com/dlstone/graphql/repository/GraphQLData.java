@@ -1,4 +1,4 @@
-package com.dlstone.graphql.common;
+package com.dlstone.graphql.repository;
 
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
