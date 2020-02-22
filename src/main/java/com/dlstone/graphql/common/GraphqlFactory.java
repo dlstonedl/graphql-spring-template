@@ -1,31 +1,40 @@
 package com.dlstone.graphql.common;
 
+import com.dlstone.graphql.annotation.FetcherMapping;
+import com.dlstone.graphql.annotation.FetcherController;
 import com.google.common.base.Charsets;
 import com.google.common.io.Resources;
 import graphql.GraphQL;
+import graphql.schema.DataFetcher;
 import graphql.schema.GraphQLSchema;
 import graphql.schema.idl.*;
 import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.net.URL;
+import java.util.Map;
+import java.util.Objects;
+import java.util.stream.Stream;
 
-import static graphql.schema.idl.TypeRuntimeWiring.newTypeWiring;
-
+@Slf4j
 @Component
 public class GraphqlFactory {
 
     @Getter
     private GraphQL graphQL;
 
-    private GraphQLDataFetchers graphQLDataFetchers;
+    private final ApplicationContext applicationContext;
 
     @Autowired
-    public GraphqlFactory(GraphQLDataFetchers graphQLDataFetchers) {
-        this.graphQLDataFetchers = graphQLDataFetchers;
+    public GraphqlFactory(ApplicationContext applicationContext) {
+        this.applicationContext = applicationContext;
     }
 
     @PostConstruct
@@ -43,11 +52,34 @@ public class GraphqlFactory {
     }
 
     private RuntimeWiring buildWiring() {
-        return RuntimeWiring.newRuntimeWiring()
-                .type(newTypeWiring("Query").dataFetcher("bookById", graphQLDataFetchers.getBookByIdDataFetcher()))
-                .type(newTypeWiring("Book").dataFetcher("authors", graphQLDataFetchers.getAuthorLoaderDataFetcher()))
-                .type("Query", builder -> builder.dataFetcher("books", graphQLDataFetchers.getBooks()))
-                .type(newTypeWiring("Mutation").dataFetcher("updateBook", graphQLDataFetchers.updateBookDataFetcher()))
-                .build();
+        RuntimeWiring.Builder runtimeWiringBuilder = RuntimeWiring.newRuntimeWiring();
+
+        Map<String, Object> beans = applicationContext.getBeansWithAnnotation(FetcherController.class);
+        beans.values().stream().forEach(bean -> handleFetcherMapping(runtimeWiringBuilder, bean));
+
+        return runtimeWiringBuilder.build();
+    }
+
+    private void handleFetcherMapping(RuntimeWiring.Builder runtimeWiringBuilder, Object bean) {
+        Method[] methods = bean.getClass().getMethods();
+        Stream.of(methods)
+            .filter(method -> Objects.nonNull(method.getAnnotation(FetcherMapping.class)))
+            .forEach(method -> {
+                FetcherMapping fetcherMapping = method.getAnnotation(FetcherMapping.class);
+                runtimeWiringBuilder.type(fetcherMapping.typeName(),
+                    builder -> builder.dataFetcher(fetcherMapping.fileName(), getDataFetcher(method, bean)));
+            });
+    }
+
+    private DataFetcher getDataFetcher(Method method, Object clazz) {
+        try {
+            return (DataFetcher) method.invoke(clazz);
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
     }
 }
