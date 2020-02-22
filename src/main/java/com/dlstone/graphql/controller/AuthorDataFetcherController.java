@@ -24,7 +24,7 @@ public class AuthorDataFetcherController {
         this.graphQLData = graphQLData;
     }
 
-    @FetcherMapping(typeName = "Book", fileName = "authorIds")
+    @FetcherMapping(typeName = "Book", fileName = "authors")
     public DataFetcher getAuthorLoaderDataFetcher() {
         return environment -> {
             Map<String, Object> book = environment.getSource();
@@ -34,7 +34,7 @@ public class AuthorDataFetcherController {
         };
     }
 
-//    @FetcherMapping(typeName = "Book", fileName = "authorIds")
+//    @FetcherMapping(typeName = "Book", fileName = "authors")
     public DataFetcher getAuthorDataFetcher() {
         return environment -> {
             Map<String,Object> book = environment.getSource();
