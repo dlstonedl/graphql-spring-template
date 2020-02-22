@@ -28,7 +28,7 @@ import java.util.stream.Stream;
 
 @Slf4j
 @Component
-public class GraphqlFactory {
+public class GraphQLFactory {
 
     @Getter
     private GraphQL graphQL;
@@ -38,7 +38,7 @@ public class GraphqlFactory {
     private final ApplicationContext applicationContext;
 
     @Autowired
-    public GraphqlFactory(ApplicationContext applicationContext, DataLoaderRegistryFactory dataLoaderRegistryFactory) {
+    public GraphQLFactory(ApplicationContext applicationContext, DataLoaderRegistryFactory dataLoaderRegistryFactory) {
         this.applicationContext = applicationContext;
         this.dataLoaderRegistryFactory = dataLoaderRegistryFactory;
     }

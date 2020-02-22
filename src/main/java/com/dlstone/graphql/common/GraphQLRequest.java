@@ -7,7 +7,7 @@ import java.util.Map;
 
 @Getter
 @Setter
-public class GraphqlRequest {
+public class GraphQLRequest {
     private String query;
     private String operationName;
     private Map<String, Object> variables;
