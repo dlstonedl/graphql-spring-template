@@ -7,6 +7,7 @@ import com.dlstone.graphql.annotation.LoaderMapping;
 import com.google.common.base.Charsets;
 import com.google.common.io.Resources;
 import graphql.GraphQL;
+import graphql.execution.instrumentation.tracing.TracingInstrumentation;
 import graphql.schema.DataFetcher;
 import graphql.schema.GraphQLSchema;
 import graphql.schema.idl.*;
@@ -48,7 +49,7 @@ public class GraphQLFactory {
         URL url = Resources.getResource("schema.graphql");
         String sdl = Resources.toString(url, Charsets.UTF_8);
         GraphQLSchema graphQLSchema = buildSchema(sdl);
-        this.graphQL = GraphQL.newGraphQL(graphQLSchema).build();
+        this.graphQL = GraphQL.newGraphQL(graphQLSchema).instrumentation(new TracingInstrumentation()).build();
         initDataLoaderRegistryFactory();
     }
 
