@@ -17,23 +17,20 @@ public class GraphqlClient {
 
     private GraphQL graphQL;
 
-    private BatchLoader<String, Map<String, String>> authorBatchLoader;
+    private DataLoaderRegistryFactory dataLoaderRegistryFactory;
 
     @Autowired
-    public GraphqlClient(GraphqlFactory graphqlFactory, BatchLoader<String, Map<String, String>> authorBatchLoader) {
+    public GraphqlClient(GraphqlFactory graphqlFactory, DataLoaderRegistryFactory dataLoaderRegistryFactory) {
         this.graphQL = graphqlFactory.getGraphQL();
-        this.authorBatchLoader = authorBatchLoader;
+        this.dataLoaderRegistryFactory = dataLoaderRegistryFactory;
     }
 
     public Object invoke(GraphqlRequest graphqlRequest) {
-        DataLoaderRegistry loaderRegistry = new DataLoaderRegistry();
-        loaderRegistry.register(GraphQLDataLoader.AUTHOR_LOADER, DataLoader.newDataLoader(authorBatchLoader));
-
         ExecutionInput executionInput = ExecutionInput.newExecutionInput()
             .query(graphqlRequest.getQuery())
             .operationName(graphqlRequest.getOperationName())
             .variables(graphqlRequest.getVariables() != null ? graphqlRequest.getVariables() : Collections.emptyMap())
-            .dataLoaderRegistry(loaderRegistry)
+            .dataLoaderRegistry(dataLoaderRegistryFactory.newDataLoaderRegistry())
             .build();
         return this.graphQL.executeAsync(executionInput).thenApply(ExecutionResult::toSpecification);
     }
