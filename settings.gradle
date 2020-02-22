@@ -1,1 +1,3 @@
 rootProject.name = 'graphql-spring-template'
+
+include 'graphql-spring-mvc-template'
