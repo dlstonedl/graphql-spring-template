@@ -3,7 +3,6 @@ package com.dlstone.graphql.controller;
 import com.dlstone.graphql.annotation.FetcherController;
 import com.dlstone.graphql.annotation.FetcherMapping;
 import com.dlstone.graphql.common.GraphQLData;
-import com.dlstone.graphql.common.GraphQLDataLoader;
 import graphql.schema.DataFetcher;
 import lombok.extern.slf4j.Slf4j;
 import org.dataloader.DataLoader;
@@ -29,7 +28,7 @@ public class AuthorDataFetcherController {
         return environment -> {
             Map<String, Object> book = environment.getSource();
             ArrayList<String> authorIds = (ArrayList<String>) book.get("authorIds");
-            DataLoader<String, Map<String, String>> authorDataLoader = environment.getDataLoader(GraphQLDataLoader.AUTHOR_LOADER);
+            DataLoader<String, Map<String, String>> authorDataLoader = environment.getDataLoader("author-loader");
             return authorDataLoader.loadMany(authorIds);
         };
     }
