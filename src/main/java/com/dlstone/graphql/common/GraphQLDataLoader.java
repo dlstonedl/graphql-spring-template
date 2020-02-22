@@ -13,16 +13,16 @@ public class GraphQLDataLoader {
 
     public static final String AUTHOR_LOADER = "author-loader";
 
-    private GraphQLDataFetchers graphQLDataFetchers;
+    private GraphQLData graphQLData;
 
     @Autowired
-    public GraphQLDataLoader(GraphQLDataFetchers graphQLDataFetchers) {
-        this.graphQLDataFetchers = graphQLDataFetchers;
+    public GraphQLDataLoader(GraphQLData graphQLData) {
+        this.graphQLData = graphQLData;
     }
 
     @Bean
     public BatchLoader<String, Map<String, String>> authorBatchLoader() {
         return authorIds -> CompletableFuture.supplyAsync(() ->
-            graphQLDataFetchers.getBatchAuthors(authorIds));
+            graphQLData.getBatchAuthors(authorIds));
     }
 }
