@@ -1,4 +1,5 @@
 dependencies {
     implementation project(':graphql-spring-common')
     implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'com.google.guava:guava:28.0-jre'
 }
