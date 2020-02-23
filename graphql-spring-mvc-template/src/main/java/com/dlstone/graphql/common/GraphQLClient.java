@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.Collections;
+import java.util.Map;
+import java.util.concurrent.CompletableFuture;
 
 @Component
 public class GraphQLClient {
@@ -21,7 +23,7 @@ public class GraphQLClient {
         this.dataLoaderRegistryFactory = dataLoaderRegistryFactory;
     }
 
-    public Object invoke(GraphQLRequest graphqlRequest) {
+    public CompletableFuture<Map<String, Object>> invoke(GraphQLRequest graphqlRequest) {
         ExecutionInput executionInput = ExecutionInput.newExecutionInput()
             .query(graphqlRequest.getQuery())
             .operationName(graphqlRequest.getOperationName())
