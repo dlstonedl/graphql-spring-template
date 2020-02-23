@@ -4,8 +4,6 @@ import com.dlstone.graphql.annotation.FetcherController;
 import com.dlstone.graphql.annotation.FetcherMapping;
 import com.dlstone.graphql.annotation.LoaderController;
 import com.dlstone.graphql.annotation.LoaderMapping;
-import com.google.common.base.Charsets;
-import com.google.common.io.Resources;
 import graphql.GraphQL;
 import graphql.schema.DataFetcher;
 import graphql.schema.GraphQLSchema;
@@ -21,10 +19,11 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
-import java.io.IOException;
+import java.io.File;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.net.URL;
+import java.nio.file.Paths;
 import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Stream;
@@ -47,10 +46,10 @@ public class GraphQLFactory {
     }
 
     @PostConstruct
-    public void init() throws IOException {
-        URL url = Resources.getResource("schema.graphql");
-        String sdl = Resources.toString(url, Charsets.UTF_8);
-        GraphQLSchema graphQLSchema = buildSchema(sdl);
+    public void init() {
+        URL url = Thread.currentThread().getContextClassLoader().getResource("schema.graphql");
+        File file = Paths.get(url.getFile()).toFile();
+        GraphQLSchema graphQLSchema = buildSchema(file);
         this.graphQL = GraphQL.newGraphQL(graphQLSchema).build();
         initDataLoaderRegistryFactory();
     }
@@ -68,8 +67,8 @@ public class GraphQLFactory {
         });
     }
 
-    private GraphQLSchema buildSchema(String sdl) {
-        TypeDefinitionRegistry typeDefinitionRegistry = new SchemaParser().parse(sdl);
+    private GraphQLSchema buildSchema(File file) {
+        TypeDefinitionRegistry typeDefinitionRegistry = new SchemaParser().parse(file);
         RuntimeWiring runtimeWiring = buildWiring();
         return new SchemaGenerator().makeExecutableSchema(typeDefinitionRegistry, runtimeWiring);
     }
