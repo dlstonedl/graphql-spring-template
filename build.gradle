@@ -21,7 +21,6 @@ subprojects {
 
     dependencies {
         implementation 'org.springframework.boot:spring-boot-starter-actuator'
-        implementation 'com.graphql-java:graphql-java:13.0'
         implementation 'com.google.guava:guava:28.0-jre'
         implementation 'org.apache.commons:commons-lang3:3.9'
         compileOnly 'org.projectlombok:lombok'
