@@ -1,3 +1,4 @@
 dependencies {
+    implementation project(':graphql-spring-common')
     implementation 'org.springframework.boot:spring-boot-starter-webflux'
 }
