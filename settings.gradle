@@ -2,3 +2,4 @@ rootProject.name = 'graphql-spring-template'
 
 include 'graphql-spring-mvc-template'
 include 'graphql-spring-webflux-template'
+include 'graphql-spring-common'
