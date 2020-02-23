@@ -3,7 +3,7 @@ package com.dlstone.graphql.controller;
 import com.dlstone.graphql.annotation.FetcherController;
 import com.dlstone.graphql.annotation.FetcherMapping;
 import com.dlstone.graphql.common.DataLoaderName;
-import com.dlstone.graphql.repository.GraphQLData;
+import com.dlstone.graphql.repository.GraphQLRepository;
 import graphql.schema.DataFetcher;
 import lombok.extern.slf4j.Slf4j;
 import org.dataloader.DataLoader;
@@ -16,11 +16,11 @@ import java.util.Map;
 @FetcherController
 public class AuthorDataFetcherController {
 
-    private GraphQLData graphQLData;
+    private GraphQLRepository graphQLRepository;
 
     @Autowired
-    public AuthorDataFetcherController(GraphQLData graphQLData) {
-        this.graphQLData = graphQLData;
+    public AuthorDataFetcherController(GraphQLRepository graphQLRepository) {
+        this.graphQLRepository = graphQLRepository;
     }
 
     @FetcherMapping(typeName = "Book", fileName = "authors")
@@ -38,7 +38,7 @@ public class AuthorDataFetcherController {
         return environment -> {
             Map<String,Object> book = environment.getSource();
             ArrayList<String> authorIds = (ArrayList<String>) book.get("authorIds");
-            return graphQLData.getAuthorsByIds(authorIds).collectList().toFuture();
+            return graphQLRepository.getAuthorsByIds(authorIds).collectList().toFuture();
         };
     }
 }
