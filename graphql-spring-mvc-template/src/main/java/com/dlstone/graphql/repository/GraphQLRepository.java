@@ -2,19 +2,16 @@ package com.dlstone.graphql.repository;
 
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
-import lombok.Getter;
-import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Slf4j
-@Setter
-@Getter
 @Component
-public class GraphQLData {
+public class GraphQLRepository {
     private List<Map<String, Object>> books = Arrays.asList(
             ImmutableMap.of("id", "book-1",
                     "name", "Harry Potter and the Philosopher's Stone",
@@ -42,7 +39,7 @@ public class GraphQLData {
                     "lastName", "Rice")
     );
 
-    public List<Map<String, String>> getBatchAuthors(List<String> authorIds) {
+    public List<Map<String, String>> getAuthorsByIds(List<String> authorIds) {
         log.info("authorIds: " + authorIds.toString());
 
         return authors
@@ -50,5 +47,26 @@ public class GraphQLData {
             .filter(author -> authorIds.contains(author.get("id")))
             .collect(Collectors.toList());
     }
+
+    public Map<String, Object> getBookById(String id) {
+        return books
+            .stream()
+            .filter(book -> Objects.equals(book.get("id"), id))
+            .findFirst()
+            .orElse(null);
+    }
+
+    public List<Map<String, Object>> getAllBooks() {
+        return books;
+    }
+
+    public Map<String,Object> updateBook(Map<String, Object> newBook) {
+        Stream<Map<String, Object>> bookStream = books
+            .stream()
+            .filter(book -> !Objects.equals(book.get("id"), newBook.get("id")));
+        books = Stream.concat(bookStream, Stream.of(newBook)).collect(Collectors.toList());
+        return newBook;
+    }
+
 
 }
