@@ -1,0 +1,15 @@
+{
+  "data": {
+    "bookById": {
+      "id": "book-1",
+      "name": "book-name",
+      "pageCount": 223,
+      "authors": [
+        {
+          "firstName": "Joanne",
+          "lastName": "Rowling"
+        }
+      ]
+    }
+  }
+}

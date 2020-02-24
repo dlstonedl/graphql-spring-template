@@ -1,0 +1,7 @@
+{
+  "query": "query Book ($id: ID!){bookById(id: $id) {id name pageCount authors { firstName lastName } }}",
+  "operationName": "Book",
+  "variables": {
+    "id": "book-1"
+  }
+}

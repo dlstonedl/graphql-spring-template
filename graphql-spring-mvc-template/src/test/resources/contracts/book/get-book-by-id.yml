@@ -1,0 +1,11 @@
+request:
+  method: POST
+  url: /graphql
+  bodyFromFile: get-book-by-id-request.json
+  headers:
+    Content-Type: application/json
+response:
+  status: 200
+  bodyFromFile: get-book-by-id-response.json
+  headers:
+    Content-type: application/json
