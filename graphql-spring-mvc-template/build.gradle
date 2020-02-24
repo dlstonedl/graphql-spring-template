@@ -29,5 +29,6 @@ dependencyManagement {
 }
 
 contracts {
-    packageWithBaseClasses = 'com.dlstone.graphql.mvc.contract'
+    baseClassForTests = 'com.dlstone.graphql.mvc.contract.BaseTestClass'
+//    packageWithBaseClasses = 'com.dlstone.graphql.mvc.contract'
 }

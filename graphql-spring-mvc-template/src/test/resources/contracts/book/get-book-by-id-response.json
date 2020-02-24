@@ -2,12 +2,20 @@
   "data": {
     "bookById": {
       "id": "book-1",
-      "name": "book-name",
+      "name": "Harry Potter and the Philosopher's Stone",
       "pageCount": 223,
       "authors": [
         {
           "firstName": "Joanne",
           "lastName": "Rowling"
+        },
+        {
+          "firstName": "Herman",
+          "lastName": "Melville"
+        },
+        {
+          "firstName": "Anne",
+          "lastName": "Rice"
         }
       ]
     }
