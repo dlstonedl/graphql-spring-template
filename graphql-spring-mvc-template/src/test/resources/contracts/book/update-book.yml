@@ -1,0 +1,11 @@
+request:
+  method: POST
+  url: /graphql
+  bodyFromFile: update-book-request.json
+  headers:
+    Content-Type: application/json
+response:
+  status: 200
+  bodyFromFile: update-book-response.json
+  headers:
+    Content-type: application/json

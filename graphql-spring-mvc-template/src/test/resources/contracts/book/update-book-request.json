@@ -1,0 +1,14 @@
+{
+  "query": "mutation UpdateBook($bookInput: BookInput!) {updateBook(bookInput: $bookInput) {id name pageCount authors {firstName lastName}}}",
+  "operationName": "UpdateBook",
+  "variables": {
+    "bookInput": {
+      "id": "book-3",
+      "name": "name",
+      "pageCount": 111,
+      "authorIds": [
+        "author-1"
+      ]
+    }
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "data": {
+    "updateBook": {
+      "id": "book-3",
+      "name": "name",
+      "pageCount": 111,
+      "authors": [
+        {
+          "firstName": "Joanne",
+          "lastName": "Rowling"
+        }
+      ]
+    }
+  }
+}
