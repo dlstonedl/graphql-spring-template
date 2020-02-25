@@ -8,6 +8,25 @@ type Query {
   books: [Book]
 }
 
+extend type Query {
+  pets: [Pet]
+}
+
+interface Pet {
+  id: ID!
+  name: String
+}
+type Cat implements Pet {
+  id: ID!
+  name: String
+  color: String
+}
+type Dog implements Pet {
+  id: ID!
+  name: String
+  sex: String
+}
+
 type Mutation {
   updateBook(bookInput: BookInput!): Book
 }
