@@ -1,0 +1,41 @@
+[
+  {
+    "description": "should_update_book",
+    "request": {
+      "method": "POST",
+      "uri": "/graphql",
+      "json": {
+        "query": "mutation UpdateBook($bookInput: BookInput!) {updateBook(bookInput: $bookInput) {id name pageCount authors {firstName lastName}}}",
+        "operationName": "UpdateBook",
+        "variables": {
+          "bookInput": {
+            "id": "book-3",
+            "name": "name",
+            "pageCount": 111,
+            "authorIds": [
+              "author-1"
+            ]
+          }
+        }
+      }
+    },
+    "response": {
+      "status": 200,
+      "json": {
+        "data": {
+          "updateBook": {
+            "id": "book-3",
+            "name": "name",
+            "pageCount": 111,
+            "authors": [
+              {
+                "firstName": "Joanne",
+                "lastName": "Rowling"
+              }
+            ]
+          }
+        }
+      }
+    }
+  }
+]

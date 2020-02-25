@@ -9,4 +9,10 @@ public class BookContractTest extends ContractTestBase {
     public void should_return_book_when_given_book_id() {
         assertContract();
     }
+
+    @Test
+    public void should_update_book() {
+        assertContract();
+    }
+
 }
