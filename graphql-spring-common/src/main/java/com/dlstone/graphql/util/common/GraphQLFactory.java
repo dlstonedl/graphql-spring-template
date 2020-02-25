@@ -1,12 +1,10 @@
 package com.dlstone.graphql.util.common;
 
-import com.dlstone.graphql.util.annotation.FetcherController;
-import com.dlstone.graphql.util.annotation.FetcherMapping;
-import com.dlstone.graphql.util.annotation.LoaderController;
-import com.dlstone.graphql.util.annotation.LoaderMapping;
+import com.dlstone.graphql.util.annotation.*;
 import graphql.GraphQL;
 import graphql.schema.DataFetcher;
 import graphql.schema.GraphQLSchema;
+import graphql.schema.TypeResolver;
 import graphql.schema.idl.RuntimeWiring;
 import graphql.schema.idl.SchemaGenerator;
 import graphql.schema.idl.SchemaParser;
@@ -79,7 +77,21 @@ public class GraphQLFactory {
         Map<String, Object> beans = applicationContext.getBeansWithAnnotation(FetcherController.class);
         beans.values().stream().forEach(bean -> handleFetcherMapping(runtimeWiringBuilder, bean));
 
+        Map<String, Object> typeBeans = applicationContext.getBeansWithAnnotation(TypeController.class);
+        typeBeans.values().stream().forEach(bean -> handleTypeMapping(runtimeWiringBuilder, bean));
+
         return runtimeWiringBuilder.build();
+    }
+
+    private void handleTypeMapping(RuntimeWiring.Builder runtimeWiringBuilder, Object bean) {
+        Method[] methods = bean.getClass().getMethods();
+        Stream.of(methods)
+            .filter(method -> Objects.nonNull(method.getAnnotation(TypeMapping.class)))
+            .forEach(method -> {
+                TypeMapping typeMapping = method.getAnnotation(TypeMapping.class);
+                runtimeWiringBuilder.type(typeMapping.typeName(),
+                    builder -> builder.typeResolver((TypeResolver) getMappingMethod(method, bean)));
+            });
     }
 
     private void handleFetcherMapping(RuntimeWiring.Builder runtimeWiringBuilder, Object bean) {
