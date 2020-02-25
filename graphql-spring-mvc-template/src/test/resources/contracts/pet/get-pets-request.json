@@ -1,0 +1,5 @@
+{
+  "query": "query {pets {__typename id name ... on Cat {color} ... on Dog { sex } }}",
+  "operationName": null,
+  "variables": null
+}

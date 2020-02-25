@@ -1,0 +1,18 @@
+{
+  "data": {
+    "pets": [
+      {
+        "__typename": "Cat",
+        "id": "catId1",
+        "name": "catName",
+        "color": "orange"
+      },
+      {
+        "__typename": "Dog",
+        "id": "dogId1",
+        "name": "dogName",
+        "sex": "male"
+      }
+    ]
+  }
+}
