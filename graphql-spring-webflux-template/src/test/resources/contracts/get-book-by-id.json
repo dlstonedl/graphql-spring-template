@@ -1,0 +1,42 @@
+[
+  {
+    "description": "should_return_book_when_given_book_id",
+    "request": {
+      "method": "POST",
+      "uri": "/graphql",
+      "json": {
+        "query": "query Book ($id: ID!){bookById(id: $id) {id name pageCount authors { firstName lastName } }}",
+        "operationName": "Book",
+        "variables": {
+          "id": "book-1"
+        }
+      }
+    },
+    "response": {
+      "status": 200,
+      "json": {
+        "data": {
+          "bookById": {
+            "id": "book-1",
+            "name": "Harry Potter and the Philosopher's Stone",
+            "pageCount": 223,
+            "authors": [
+              {
+                "firstName": "Joanne",
+                "lastName": "Rowling"
+              },
+              {
+                "firstName": "Herman",
+                "lastName": "Melville"
+              },
+              {
+                "firstName": "Anne",
+                "lastName": "Rice"
+              }
+            ]
+          }
+        }
+      }
+    }
+  }
+]
