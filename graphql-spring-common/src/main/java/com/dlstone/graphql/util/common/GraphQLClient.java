@@ -23,11 +23,12 @@ public class GraphQLClient {
         this.dataLoaderRegistryFactory = dataLoaderRegistryFactory;
     }
 
-    public CompletableFuture<Map<String, Object>> invoke(GraphQLRequest graphqlRequest) {
+    public CompletableFuture<Map<String, Object>> invoke(GraphQLCommand graphQLCommand) {
         ExecutionInput executionInput = ExecutionInput.newExecutionInput()
-            .query(graphqlRequest.getQuery())
-            .operationName(graphqlRequest.getOperationName())
-            .variables(graphqlRequest.getVariables() != null ? graphqlRequest.getVariables() : Collections.emptyMap())
+            .query(graphQLCommand.getQuery())
+            .operationName(graphQLCommand.getOperationName())
+            .variables(graphQLCommand.getVariables())
+            .context(graphQLCommand.getContext())
             .dataLoaderRegistry(dataLoaderRegistryFactory.newDataLoaderRegistry())
             .build();
         return this.graphQL.executeAsync(executionInput).thenApply(ExecutionResult::toSpecification);

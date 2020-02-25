@@ -1,6 +1,7 @@
 package com.dlstone.graphql.webflux.controller;
 
 import com.dlstone.graphql.util.common.GraphQLClient;
+import com.dlstone.graphql.util.common.GraphQLCommand;
 import com.dlstone.graphql.util.common.GraphQLRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,7 @@ public class GraphQLController {
     @PostMapping("/graphql")
     public Mono<ResponseEntity<Map<String, Object>>> graphql(@RequestBody Mono<GraphQLRequest> graphQLRequestMono) {
         return graphQLRequestMono
+            .map(graphQLRequest -> new GraphQLCommand(graphQLRequest))
             .flatMap(graphQLRequest -> Mono.fromFuture(graphQLClient.invoke(graphQLRequest)))
             .map(result -> ResponseEntity.ok().body(result))
             .switchIfEmpty(Mono.just(ResponseEntity.badRequest().build()));

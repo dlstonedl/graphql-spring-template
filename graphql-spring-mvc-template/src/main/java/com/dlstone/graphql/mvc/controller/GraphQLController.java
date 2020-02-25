@@ -1,6 +1,7 @@
 package com.dlstone.graphql.mvc.controller;
 
 import com.dlstone.graphql.util.common.GraphQLClient;
+import com.dlstone.graphql.util.common.GraphQLCommand;
 import com.dlstone.graphql.util.common.GraphQLRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -25,7 +26,7 @@ public class GraphQLController {
 
     @PostMapping("/graphql")
     public ResponseEntity graphql(@RequestBody GraphQLRequest graphqlRequest) {
-        return graphqlClient.invoke(graphqlRequest)
+        return graphqlClient.invoke(new GraphQLCommand(graphqlRequest))
             .handle((result, throwable) ->
                 Objects.isNull(throwable) ? ok(result) : badRequest().build())
             .join();
