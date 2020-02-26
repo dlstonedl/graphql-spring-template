@@ -53,7 +53,7 @@ public class GraphQLFactory {
     }
 
     private void initDataLoaderRegistryFactory() {
-        Map<String, Object> beans = applicationContext.getBeansWithAnnotation(LoaderController.class);
+        Map<String, Object> beans = applicationContext.getBeansWithAnnotation(GraphQLController.class);
         beans.values().forEach(bean -> {
             Method[] methods = bean.getClass().getMethods();
             Stream.of(methods)
@@ -74,11 +74,9 @@ public class GraphQLFactory {
     private RuntimeWiring buildWiring() {
         RuntimeWiring.Builder runtimeWiringBuilder = RuntimeWiring.newRuntimeWiring();
 
-        Map<String, Object> beans = applicationContext.getBeansWithAnnotation(FetcherController.class);
+        Map<String, Object> beans = applicationContext.getBeansWithAnnotation(GraphQLController.class);
         beans.values().stream().forEach(bean -> handleFetcherMapping(runtimeWiringBuilder, bean));
-
-        Map<String, Object> typeBeans = applicationContext.getBeansWithAnnotation(TypeController.class);
-        typeBeans.values().stream().forEach(bean -> handleTypeMapping(runtimeWiringBuilder, bean));
+        beans.values().stream().forEach(bean -> handleTypeMapping(runtimeWiringBuilder, bean));
 
         return runtimeWiringBuilder.build();
     }

@@ -2,14 +2,14 @@ package com.dlstone.graphql.mvc.controller;
 
 
 import com.dlstone.graphql.util.annotation.FetcherMapping;
-import com.dlstone.graphql.util.annotation.FetcherController;
+import com.dlstone.graphql.util.annotation.GraphQLController;
 import com.dlstone.graphql.mvc.repository.GraphQLRepository;
 import graphql.schema.DataFetcher;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Map;
 
-@FetcherController
+@GraphQLController
 public class BookDataFetcherController {
 
     private GraphQLRepository graphQLRepository;

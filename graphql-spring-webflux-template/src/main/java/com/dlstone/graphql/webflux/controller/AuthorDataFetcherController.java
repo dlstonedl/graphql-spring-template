@@ -1,6 +1,6 @@
 package com.dlstone.graphql.webflux.controller;
 
-import com.dlstone.graphql.util.annotation.FetcherController;
+import com.dlstone.graphql.util.annotation.GraphQLController;
 import com.dlstone.graphql.util.annotation.FetcherMapping;
 import com.dlstone.graphql.webflux.common.DataLoaderName;
 import com.dlstone.graphql.webflux.repository.GraphQLRepository;
@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.Map;
 
 @Slf4j
-@FetcherController
+@GraphQLController
 public class AuthorDataFetcherController {
 
     private GraphQLRepository graphQLRepository;

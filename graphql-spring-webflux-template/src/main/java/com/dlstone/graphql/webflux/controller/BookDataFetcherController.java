@@ -1,7 +1,7 @@
 package com.dlstone.graphql.webflux.controller;
 
 
-import com.dlstone.graphql.util.annotation.FetcherController;
+import com.dlstone.graphql.util.annotation.GraphQLController;
 import com.dlstone.graphql.util.annotation.FetcherMapping;
 import com.dlstone.graphql.webflux.repository.GraphQLRepository;
 import graphql.schema.DataFetcher;
@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Map;
 
-@FetcherController
+@GraphQLController
 public class BookDataFetcherController {
 
     private GraphQLRepository graphQLRepository;

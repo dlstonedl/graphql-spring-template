@@ -1,6 +1,6 @@
 package com.dlstone.graphql.webflux.controller;
 
-import com.dlstone.graphql.util.annotation.LoaderController;
+import com.dlstone.graphql.util.annotation.GraphQLController;
 import com.dlstone.graphql.util.annotation.LoaderMapping;
 import com.dlstone.graphql.webflux.repository.GraphQLRepository;
 import org.dataloader.BatchLoader;
@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Map;
 
-@LoaderController
+@GraphQLController
 public class DataLoadController {
 
     private GraphQLRepository graphQLRepository;

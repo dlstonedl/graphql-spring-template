@@ -1,11 +1,11 @@
 package com.dlstone.graphql.mvc.controller;
 
 import com.dlstone.graphql.mvc.model.Cat;
-import com.dlstone.graphql.util.annotation.TypeController;
+import com.dlstone.graphql.util.annotation.GraphQLController;
 import com.dlstone.graphql.util.annotation.TypeMapping;
 import graphql.schema.TypeResolver;
 
-@TypeController
+@GraphQLController
 public class GraphQLTypeController {
 
     @TypeMapping(typeName = "Pet")
