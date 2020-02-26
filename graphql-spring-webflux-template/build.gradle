@@ -1,5 +1,5 @@
 dependencies {
-    implementation project(':graphql-spring-common')
+    implementation project(':graphql-java-client')
     implementation 'org.springframework.boot:spring-boot-starter-webflux'
     implementation 'com.google.guava:guava:28.0-jre'
     implementation 'org.apache.commons:commons-lang3:3.9'

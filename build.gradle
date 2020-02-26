@@ -4,8 +4,8 @@ plugins{
 }
 
 allprojects {
-    group = 'com.dlstone'
-    version = '0.0.1-SNAPSHOT'
+    group = 'com.github.dlstonedl'
+    version = '0.1.0'
 }
 
 subprojects {
