@@ -29,7 +29,7 @@ public class GraphQLClient {
             .operationName(graphQLCommand.getOperationName())
             .variables(graphQLCommand.getVariables())
             .context(graphQLCommand.getContext())
-            .dataLoaderRegistry(dataLoaderRegistryFactory.newDataLoaderRegistry())
+            .dataLoaderRegistry(dataLoaderRegistryFactory.newDataLoaderRegistry(graphQLCommand.getContext()))
             .build();
         return this.graphQL.executeAsync(executionInput).thenApply(ExecutionResult::toSpecification);
     }

@@ -60,7 +60,7 @@ public class GraphQLFactory {
                 .filter(method -> Objects.nonNull(method.getAnnotation(LoaderMapping.class)))
                 .forEach(method -> {
                     LoaderMapping loaderMapping = method.getAnnotation(LoaderMapping.class);
-                    dataLoaderRegistryFactory.registryBatchLoader(loaderMapping.name(), (BatchLoader<?, ?>) getMappingMethod(method, bean));
+                    dataLoaderRegistryFactory.registryBatchLoader(loaderMapping.name(), getMappingMethod(method, bean));
                 });
         });
     }
