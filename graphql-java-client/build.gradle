@@ -1,0 +1,93 @@
+apply plugin: 'maven-publish'
+apply plugin: 'signing'
+
+dependencies {
+    compile 'com.graphql-java:graphql-java:13.0'
+    compile 'org.springframework.boot:spring-boot-starter-actuator'
+}
+
+bootJar {
+    enabled = false
+}
+
+jar {
+    enabled = true
+}
+
+task sourcesJar(type: Jar) {
+    archiveClassifier = 'sources'
+    from sourceSets.main.allJava
+}
+
+task javadocJar(type: Jar) {
+    archiveClassifier = 'javadoc'
+    from javadoc
+}
+
+javadoc {
+    options.encoding = 'UTF-8'
+}
+
+publishing {
+    // 定义发布什么
+    publications {
+        mavenJava(MavenPublication) {
+            groupId = 'com.github.dlstonedl'
+            artifactId = 'graphql-java-client'
+            version = '0.1.0'
+            from components.java
+            artifact sourcesJar
+            artifact javadocJar
+            pom {
+                // 构件名称
+                // 区别于artifactId，可以理解为artifactName
+                name = 'graphql-java-client'
+                // 构件描述
+                description = 'GraphQL Java Client'
+                // 构件主页
+                url = 'https://github.com/dlstonedl/graphql-spring-template'
+                // 许可证名称和地址
+                licenses {
+                    license {
+                        name = 'MIT License'
+                        url = 'http://www.opensource.org/licenses/mit-license.php'
+                    }
+                }
+                // 开发者信息
+                developers {
+                    developer {
+                        id = 'dlstonedl'
+                        name = 'Lei Deng'
+                        email = 'dlstonezlb@gmail.com'
+                    }
+                }
+                // 版本控制仓库地址
+                scm {
+                    url = 'https://github.com/dlstonedl/graphql-spring-template'
+                    connection = 'scm:git:git@github.com:dlstonedl/graphql-spring-template.git'
+                    developerConnection = 'scm:git:git@github.com:dlstonedl/graphql-spring-template.git'
+                }
+            }
+        }
+    }
+    // 定义发布到哪里
+    repositories {
+        maven {
+            url "https://oss.sonatype.org/service/local/staging/deploy/maven2"
+            credentials {
+                // 这里就是之前在issues.sonatype.org注册的账号
+                username sonatypeUsername
+                password sonatypePassword
+            }
+        }
+    }
+}
+
+signing {
+    sign publishing.publications.mavenJava
+}
+
+
+
+
+
